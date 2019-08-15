@@ -814,19 +814,40 @@
 ;
 ;; 9. To judge a recursive function, you only have to consider whether it
 ;;; covers all the cases.
-; 
+; Not, you only need to cover the stop step and prevent inifity loops, check the 
+; stop desicion is work well, so, your don't realy needs to cover all cases,
+; this come to becomes realy a mess, and you to becomes realy confusing, your justs 
+; needs to keep in mind the function work for your problem, your don't needs to nows 
+; who then covers the problem.
+;
+;; 10. Lists can be used to represent sets. Several build-in functions view 
+;;; lists this way.
 ;
 ;
-
-
-
-
-
-
-
-
-
-
-
-
-
+;
+;; 11. Keyword arguments are optional, and are identify not by possition, but 
+;;; by simbolic tags that presede them.
+;
+;
+;
+;; 12. Lists are subtypes of sequences. Common Lisp are a large number of sequence
+;;; functions
+;
+;
+;
+;; 13. A cons that isn't a proper list is called a dotted list
+;;;
+;
+;
+;
+;; 14. Lists with consenses as elements can be used to represent a mapping. Such
+;;; lists are called assoc-list.
+;
+;
+;
+;
+;; 15. Automatic memory management saves you from dealing with memory allocation,
+;;; but generating excessives garbage can meke programs slower
+;
+;
+;
