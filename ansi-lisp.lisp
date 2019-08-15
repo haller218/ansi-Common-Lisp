@@ -1,5 +1,11 @@
 ; become the frist program comparation using lisp.
-
+;;
+;; using CLISP to run all the code
+;; 
+;;
+;;
+;;
+;;
 
 #||
 
@@ -482,7 +488,7 @@
     (cons (car lii) (oficial-our-copy-list (cdr lii)))))
 
 
-(let www (append '(3 4 66 4 nil) '('v 4 'c 'e nil 3 nil)))
+; (let www (append '(3 4 66 4 nil) '('v 4 'c 'e nil 3 nil)))
 
 
 (defun compress (x)
