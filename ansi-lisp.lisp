@@ -644,15 +644,6 @@
       (our-subseq lst (- ini 1) fni))))
 
 
-
-
-
-
-
-
-
-
-
 ;; polindrome verify
 (defun mirror? (s)
   (let ((len (length s)))
@@ -822,32 +813,186 @@
 ;
 ;; 10. Lists can be used to represent sets. Several build-in functions view 
 ;;; lists this way.
-;
-;
+; yes, it's true, sets is easy to representate in bi-directional list walk
 ;
 ;; 11. Keyword arguments are optional, and are identify not by possition, but 
 ;;; by simbolic tags that presede them.
-;
-;
+; yes, is the meta-data key:value of lisp to change the behavior of procedures
 ;
 ;; 12. Lists are subtypes of sequences. Common Lisp are a large number of sequence
 ;;; functions
-;
-;
+; yes, some of this is maplist, mapcar, append, and so on
 ;
 ;; 13. A cons that isn't a proper list is called a dotted list
 ;;;
-;
-;
+; yes, the notation of list is the end is a nil element, the dottedlist is 
+; a two value of one cons, car and cdr
 ;
 ;; 14. Lists with consenses as elements can be used to represent a mapping. Such
 ;;; lists are called assoc-list.
-;
-;
-;
+; is a key:value by simbol used to acess the value in a sutch variable
 ;
 ;; 15. Automatic memory management saves you from dealing with memory allocation,
 ;;; but generating excessives garbage can meke programs slower
+; yes, is good, but this is only ocorr in the instace of the same object
+; used multiplo times, create a heap of mutch objects in yang garbage
 ;
-;
-;
+
+;;;; Exercises
+
+#||
+
+Write this in box notation
+
+(a) (a b (c d))
+(b) (a (b (c (d))))
+(c) (((a b) c) d)
+(d) (a (b . c) . d)
+
+||#
+
+;; Write a version of union that preserves the order of the elements in the
+; original lists:
+
+; Works! ok
+(defun my-new-onion (lis_now olds)
+  (if (atom olds)
+      lis_now
+    (my-new-onion (append lis_now (list (car olds))) (cdr olds))))
+    
+;; Define a function that takes a list and return a list indicating the number of times
+; each (eql) element appear, sorted from most commmon element to least common:
+; > (occurrences '(a b a d a c d c a))
+; ((A . 4) (C . 2) (D . 2) (B . 1))
+
+;; TODO: RECREATE THE PROBLEM RESOLUTION USING MAP, REDUCE
+
+;;; Declarative style programin functional
+;;
+; checks if the list is empty
+(defun occurrences (list)
+  (if (consp list)
+      (occurrent-behavior nil list)
+    nil))
+
+;;
+; check List
+(defun exist-element (lis test)
+  (remove-if-not #'(lambda(x) x) (maplist test lis)))
+
+;;
+; make cells of dots
+(defun create-dot (item val)
+  (cons item val))
+
+(defun add-dot (item num lis)
+  (cons (create-dot item num) lis))
+
+
+(defun up-the-dot (item lis)
+  (maplist #'(lambda(x)
+	       (if (eql (caar x) item)
+		   (create-dot (caar x) (+ (cdar x) 1))
+		 (create-dot (caar x) (cdar x)))) lis))
+
+(defun short-list-cresent (lis)
+  (sort lis #'<))
+
+(defun busca-dot-por-chave-valor (chave valor lis)
+  (reduce #'(lambda(x y)
+	      (if (and (eql (car y) chave)
+		       (eql (cdr y) valor))
+		  y
+		x))
+	  lis))
+
+(defun sort-values-dot (list)
+  (short-list-cresent
+   (maplist #'(lambda(x)(cdar x)) list)))
+
+(defun short-list (lis)
+  (maplist #'(lambda(x)
+	       (if (eql (cdar x) item)
+		   ))
+	   lis))
+		
+
+(defun exist-element-equal-than (current lis)
+  (exist-element current (lambda(x)(eql (caar x) (car lis)))))
+
+;;
+; make list of repatitions
+(defun occurrent-behavior (ocurrent lis)
+  (if (null lis)
+      ocurrent  
+    (if (not (exist-element-equal-than ocurrent lis))
+	(occurrent-behavior (add-dot (car lis) 1 ocurrent) (cdr lis))
+      (occurrent-behavior (up-the-dot (car lis) ocurrent) (cdr lis)))))
+      
+      
+    
+#||  ;|| PROOF! the code using map | reduce is better 
+
+"(if (not (null ocurrent))
+	(if (exist-element l
+			     (lambda(x y)(eql x y)))
+	    (occurrent-behavior (increment-list-current ocurrent (car lis))
+				(cdr lis))
+	  (occurrent-behavior occurrent (cdr lis)))
+      (sorte-occurent-list occurrent))"
+;;
+; check if the element exist in the linear list using callback
+(defun check-list-item (list item appl)
+  (if (atom list)
+      nil
+    (if (appl (car list) item)
+	t
+      (or nil (check-list-item (cdr list) item)))))
+	
+  
+(defun increment-list-current (lists item)
+  (now-continue-increment-list (car lists) lists item))
+
+(defun now-continue-increment-list (actual-list lists item)
+  (if (null lists)
+      actual-list
+    (if (check-list-item (car lists) item
+			 (lambda(x y)(eql (car x) y)))
+	(now-continue-increment-list
+	 (cons (car lists) actual-list) (cdr lists) item)
+      (now-continue-increment-list
+       (cons (car lists) actual-list) (cdr lists) item))))
+
+
+
+(defun find-item-list (lists item proc)
+  (if (null lists)
+      nil))
+  
+
+(defun update-dotted-list (dotted item)
+  (if (null dotted)
+      (cons item 1)
+    (cons item (+ (car (cdr dotted)) 1))))
+
+(defun now-short-current-list (actualList list))
+  
+
+(defun sort-nums-cresent (lis-nums)
+  (sort (copy-list lis-nums) #'<))
+
+(defun sorte-occurrent-list (list)
+  (now-short-current-list nil list))
+
+
+
+||#
+
+
+
+
+
+
+
+
+
