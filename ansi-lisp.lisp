@@ -885,40 +885,44 @@ Write this in box notation
 (defun create-dot (item val)
   (cons item val))
 
+;;
+; appendo dot to list of dots
 (defun add-dot (item num lis)
   (cons (create-dot item num) lis))
 
+;;
+; Interfaces
+(defun value-of-dot (dot)
+  (cdar dot))
 
+(defun key-of-dot (dot)
+  (caar dot))
+
+;;
+; up te value of list of dots
 (defun up-the-dot (item lis)
   (maplist #'(lambda(x)
-	       (if (eql (caar x) item)
-		   (create-dot (caar x) (+ (cdar x) 1))
-		 (create-dot (caar x) (cdar x)))) lis))
+	       (if (eql (key-of-dot x) item)
+		   (create-dot (key-of-dot x) (+ (value-of-dot x) 1))
+		 (create-dot (key-of-dot x) (value-of-dot x)))) lis))
 
 (defun short-list-cresent (lis)
   (sort lis #'<))
 
-(defun busca-dot-por-chave-valor (chave valor lis)
-  (reduce #'(lambda(x y)
-	      (if (and (eql (car y) chave)
-		       (eql (cdr y) valor))
-		  y
-		x))
-	  lis))
 
 (defun sort-values-dot (list)
   (short-list-cresent
-   (maplist #'(lambda(x)(cdar x)) list)))
+   (maplist #'(lambda(x)(value-of-dot x)) list)))
 
 (defun short-list (lis)
   (maplist #'(lambda(x)
-	       (if (eql (cdar x) item)
+	       (if (eql (value-of-dot x) item)
 		   ))
 	   lis))
 		
 
 (defun exist-element-equal-than (current lis)
-  (exist-element current (lambda(x)(eql (caar x) (car lis)))))
+  (exist-element current (lambda(x)(eql (value-of-dot x) (car lis)))))
 
 ;;
 ; make list of repatitions
