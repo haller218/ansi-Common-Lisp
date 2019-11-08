@@ -878,12 +878,13 @@ Write this in box notation
 ;;
 ; check List
 (defun exist-element (lis test)
-  (remove-if-not #'(lambda(x) x) (maplist test lis)))
+  (remove-if-not #'(lambda(x) x)
+		 (maplist test lis)))
 
 ;;
 ; make cells of dots
-(defun create-dot (item val)
-  (cons item val))
+(defun create-dot (item lis)
+  (cons item lis))
 
 ;;
 ; appendo dot to list of dots
@@ -898,40 +899,59 @@ Write this in box notation
 (defun key-of-dot (dot)
   (caar dot))
 
+(defun value-of-one-dot (dot)
+  (cdr dot))
+
+(defun key-of-one-dot (dot)
+  (car dot))
+
 ;;
 ; up te value of list of dots
 (defun up-the-dot (item lis)
   (maplist #'(lambda(x)
 	       (if (eql (key-of-dot x) item)
 		   (create-dot (key-of-dot x) (+ (value-of-dot x) 1))
-		 (create-dot (key-of-dot x) (value-of-dot x)))) lis))
+		 (create-dot (key-of-dot x) (value-of-dot x))))
+	   lis))
 
+;;
+; short dot list
+
+;;
+; short list of numbers
 (defun short-list-cresent (lis)
   (sort lis #'<))
 
 
-(defun sort-values-dot (list)
+(defun sort-values-dot (lis)
   (short-list-cresent
-   (maplist #'(lambda(x)(value-of-dot x)) list)))
+   (maplist #'(lambda(x)
+		(value-of-dot x))
+	    lis)))
 
-(defun short-list (lis)
-  (maplist #'(lambda(x)
-	       (if (eql (value-of-dot x) item)
-		   ))
+(defun short-list-of-dots (lis)
+  (maplist #'(lambda(x) x)
 	   lis))
-		
+
 
 (defun exist-element-equal-than (current lis)
-  (exist-element current (lambda(x)(eql (value-of-dot x) (car lis)))))
+  (exist-element current (lambda(x)
+			   (eql (value-of-one-dot x)
+				(car lis)))))
 
 ;;
 ; make list of repatitions
 (defun occurrent-behavior (ocurrent lis)
   (if (null lis)
-      ocurrent  
+      ocurrent
     (if (not (exist-element-equal-than ocurrent lis))
 	(occurrent-behavior (add-dot (car lis) 1 ocurrent) (cdr lis))
       (occurrent-behavior (up-the-dot (car lis) ocurrent) (cdr lis)))))
       
       
+
+
+
+
+
     
