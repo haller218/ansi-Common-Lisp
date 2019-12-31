@@ -968,10 +968,42 @@ Write this in box notation
     (if (not (exist-element (car lis) ocurrent))
 	(occurrent-behavior (add-dot (car lis) 1 ocurrent) (cdr lis))
       (occurrent-behavior (up-the-dot (car lis) ocurrent) (cdr lis)))))
-
-
-
-
+;
+;
+;
+;;;; 4. Why does (member '(a) '((a) (b))) return nil?
+;; because its uses cdr with returns nil in a one item list
+;;
+;;;; 5. Suppose the function pos+ takes a list and returns a list of each element plus its position:
+;; > (pos+ '(7 5 1 4))
+;; (7 6 3 7)
+;;
+;;; Define this function using (a) Recursion, (b) iteration, (c) mapcar.
+;;
+;;;; 6. After years of deliberation, a goverment commission has decided that lists
+;;; should be represented by using the cdr to point to the frist element and the car
+;;; to point to the rest of the list. Define the goverment version of the following
+;;; functions:
+;;
+;; (a) cons
+;; (b) list
+;; (c) length (for lists)
+;; (d) member (for lists; no keywords)
+;;
+;;;; 7. Modify the program in Figure 3.6 to use fewer cons cells.
+;;; (Hint: Use dotted lists.)
+;;
+;;
+;;;; 8. Define a function that takes a list and prints it in dot notation:
+;;; > (showdots '(a b c))
+;;; (A . (B . (C . NIL)))
+;;
+;;
+;;;; 9. Write a program to find the longest finite path through a network
+;;; represented as in section 3.15. The network may contain cycles.
+;;;
+;;
+;;
 
 
     
