@@ -701,7 +701,7 @@
 	   (proper-list? (cdr x)))))
 
 
-(setf pair (cons 'a 'b))
+;; (setf pair (cons 'a 'b))
 
 (defun our-assoc (key alist)
   (and (consp alist)
@@ -746,7 +746,7 @@
 	      (cons n path))
 	  (cdr (assoc node net))))
 
-(setf min '((a b c) (b c) (c d)))
+;; (setf min '((a b c) (b c) (c d)))
 
 
 ;;; Garbage
@@ -876,12 +876,6 @@ Write this in box notation
     nil))
 
 ;;
-; check List
-(defun exist-element (lis test)
-  (remove-if-not #'(lambda(x) x)
-		 (maplist test lis)))
-
-;;
 ; make cells of dots
 (defun create-dot (item lis)
   (cons item lis))
@@ -905,50 +899,76 @@ Write this in box notation
 (defun key-of-one-dot (dot)
   (car dot))
 
+;;;
+;; check List
+(defun the-nex-in-list (now next)
+  (eq (caar now) next))
+
+;; using in
+(defun exist-element (test lis)
+    (and (not (null lis))
+	 (or (eq test (caar lis))
+	     (exist-element test (cdr lis)))))
+
+;;
+;; Deprecated !
+(defun exist-element-from-list-in-list (list-one list-two)
+  (defun exist-element (test lis)
+    (and (not (null lis))
+	 (or (eq test (car lis))
+	     (exist-element test (cdr lis)))))
+  (and (not (null list-one))
+       (or (exist-element (caar list-one) list-two)
+	   (exist-element-from-list-in-list (cdr list-one) list-two))))
+
+
 ;;
 ; up te value of list of dots
 (defun up-the-dot (item lis)
-  (maplist #'(lambda(x)
-	       (if (eql (key-of-dot x) item)
-		   (create-dot (key-of-dot x) (+ (value-of-dot x) 1))
-		 (create-dot (key-of-dot x) (value-of-dot x))))
-	   lis))
-
-;;
-; short dot list
+  (defun update-dot (i test)
+    (if (eql test (car i))
+	(create-dot (car i) (+ (cdr i) 1))
+	(create-dot (car i) (cdr i))))
+  (if (not (null lis))
+      (cons (update-dot (car lis) item)
+	    (up-the-dot item (cdr lis)))
+	nil))
 
 ;;
 ; short list of numbers
 (defun short-list-cresent (lis)
   (sort lis #'<))
 
+(defun short-a-list (list-to)
+  (defun shorted (list-nums list-origin)
+    (defun searcht (num list-org)
+      (if (not (null list-org))
+	  (if (eq (cdar list-org) num)
+	      (car list-org)
+	      (searcht num (cdr list-org)))))
+    (if (not (null list-nums))
+	(cons (searcht (car list-nums) list-origin)
+	      (shorted (cdr list-nums) list-origin))))
+  (defun scheme-something (fun list)
+    (if (null list)
+	list
+	(cons (funcall fun list)
+	      (scheme-something fun (cdr list)))))
+  (let ((nums (scheme-something #'cdar list-to)))
+    (setq nums (sort (copy-list nums) #'>))
+    (shorted nums list-to)))
 
-(defun sort-values-dot (lis)
-  (short-list-cresent
-   (maplist #'(lambda(x)
-		(value-of-dot x))
-	    lis)))
-
-(defun short-list-of-dots (lis)
-  (maplist #'(lambda(x) x)
-	   lis))
-
-
-(defun exist-element-equal-than (current lis)
-  (exist-element current (lambda(x)
-			   (eql (value-of-one-dot x)
-				(car lis)))))
-
+     
+;;; (short-a-list '((C . 2) (D . 2) (B . 1) (A . 4)))
 ;;
 ; make list of repatitions
 (defun occurrent-behavior (ocurrent lis)
   (if (null lis)
-      ocurrent
-    (if (not (exist-element-equal-than ocurrent lis))
+      (short-a-list ocurrent)
+    (if (not (exist-element (car lis) ocurrent))
 	(occurrent-behavior (add-dot (car lis) 1 ocurrent) (cdr lis))
       (occurrent-behavior (up-the-dot (car lis) ocurrent) (cdr lis)))))
-      
-      
+
 
 
 
