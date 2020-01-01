@@ -972,11 +972,26 @@ Write this in box notation
 ;
 ;
 ;;;; 4. Why does (member '(a) '((a) (b))) return nil?
-;; because its uses cdr with returns nil in a one item list
+;;
+;;; because its uses cdr with returns nil in a one item list
 ;;
 ;;;; 5. Suppose the function pos+ takes a list and returns a list of each element plus its position:
 ;; > (pos+ '(7 5 1 4))
 ;; (7 6 3 7)
+;;
+
+;; (a) Recursion
+(defun pos+ (lst-pos)
+  (defun pos-aps (acc pos-cont lis)
+    (if (null lis)
+	(reverse acc)
+	(pos-aps (cons (+ (car lis) pos-cont)
+		       acc)
+		 (+ pos-cont 1)
+		 (cdr lis))))
+  (pos-aps nil 0 lst-pos))
+
+;;
 ;;
 ;;; Define this function using (a) Recursion, (b) iteration, (c) mapcar.
 ;;
