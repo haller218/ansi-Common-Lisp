@@ -865,8 +865,6 @@ Write this in box notation
 ; > (occurrences '(a b a d a c d c a))
 ; ((A . 4) (C . 2) (D . 2) (B . 1))
 
-;; TODO: RECREATE THE PROBLEM RESOLUTION USING MAP, REDUCE
-
 ;;; Declarative style programin functional
 ;;
 ; checks if the list is empty
@@ -990,6 +988,17 @@ Write this in box notation
 		 (+ pos-cont 1)
 		 (cdr lis))))
   (pos-aps nil 0 lst-pos))
+
+;; (b) interation
+
+(defun inter-pos+ (lst-pos)
+  (let ((cont -1))
+    (loop (for x in lst-pos)
+       (do
+	(setv cont (+ cont 1))
+	(collect (+ cont x))))))
+
+
 
 ;;
 ;;
