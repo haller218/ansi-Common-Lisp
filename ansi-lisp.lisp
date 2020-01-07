@@ -998,6 +998,15 @@ Write this in box notation
 	(setv cont (+ cont 1))
 	(collect (+ cont x))))))
 
+;; (c) mapcar
+
+(defun  mapcar-pos+ (lst)
+  (let ((cont -1))
+    (mapcar (lambda(x)
+	      (setv cont (+ cont 1))
+	      (+ cont x))
+	    lst)))
+
 
 
 ;;
