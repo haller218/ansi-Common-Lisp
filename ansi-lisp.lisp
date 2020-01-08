@@ -993,10 +993,11 @@ Write this in box notation
 
 (defun inter-pos+ (lst-pos)
   (let ((cont -1))
-    (loop (for x in lst-pos)
-       (do
-	(setv cont (+ cont 1))
-	(collect (+ cont x))))))
+    (defun int (num)
+      (setq cont (+ cont 1))
+      (+ cont num))
+    (loop for x in lst-pos
+	collect (int x))))
 
 ;; (c) mapcar
 
@@ -1006,8 +1007,6 @@ Write this in box notation
 	      (setv cont (+ cont 1))
 	      (+ cont x))
 	    lst)))
-
-
 
 ;;
 ;;
