@@ -1017,6 +1017,32 @@ Write this in box notation
 ;;; to point to the rest of the list. Define the goverment version of the following
 ;;; functions:
 ;;
+
+
+(defun I (i)
+  i)
+
+(defun lazy (arg)
+  (lambda(fn)
+    (funcall fn arg)))
+	     
+;; (a) cons
+(defun ocons (itemfor listfor)
+  (lambda (fn)
+    (funcall fn itemfor (lazy listfor))))
+
+
+
+(defun ocar (ohcons)
+  (funcall ohcons (lambda(fr sq)
+		    (funcall sq 'I))))
+
+
+(defun ocdr (ohcons)
+  (funcall ohcons (lambda(fr sq)
+		    fr)))
+
+
 ;; (a) cons
 ;; (b) list
 ;; (c) length (for lists)
