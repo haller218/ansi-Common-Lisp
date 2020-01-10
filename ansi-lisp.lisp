@@ -1024,13 +1024,25 @@ Write this in box notation
 
 (defun lazy (arg)
   (lambda(fn)
-    (funcall fn arg)))
-	     
+	(funcall fn arg)))
+
 ;; (a) cons
 (defun ocons (itemfor listfor)
   (lambda (fn)
     (funcall fn itemfor (lazy listfor))))
 
+(defun compress (item)
+  (ocons item 'nol))
+
+(defun decompress (item)
+  (if (= (ocdr item) 'nol)
+      (ocar item)
+      (ocdr item)))
+
+
+(defun acons (itemfor listfor)
+  (lambda (fn)
+    (ocons itemfor (compress listfor))))
 
 
 (defun ocar (ohcons)
@@ -1041,6 +1053,19 @@ Write this in box notation
 (defun ocdr (ohcons)
   (funcall ohcons (lambda(fr sq)
 		    fr)))
+
+
+; needs a flag for data structure handler
+;; (d) member
+(defun omember (lsts item)
+  (and (not (atom lsts))
+       (or (eql (ocdr lsts) item)
+	   (omember (ocar lsts) item))))
+
+
+
+
+
 
 
 ;; (a) cons
