@@ -1036,8 +1036,8 @@ Write this in box notation
 
 (defun decompress (item)
   (if (= (ocdr item) 'nol)
-      (ocar item)
-      (ocdr item)))
+      (ocdr item)
+      (ocar item)))
 
 
 (defun acons (itemfor listfor)
