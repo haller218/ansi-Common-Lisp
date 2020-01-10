@@ -1034,10 +1034,13 @@ Write this in box notation
 (defun compress (item)
   (ocons item 'nol))
 
-(defun decompress (item)
+(defun nullp (item)
   (if (= (ocdr item) 'nol)
-      (ocdr item)
-      (ocar item)))
+      t
+      nil))
+
+(defun decompress (item)
+  (cdr item))
 
 
 (defun acons (itemfor listfor)
