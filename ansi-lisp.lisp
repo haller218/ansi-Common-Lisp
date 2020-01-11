@@ -1036,7 +1036,6 @@ Write this in box notation
       t
       nil))
 
-
 (defun ocar (ohcons)
   (funcall ohcons (lambda(fr sq)
 		    (funcall sq 'I))))
@@ -1045,7 +1044,6 @@ Write this in box notation
 (defun ocdr (ohcons)
   (funcall ohcons (lambda(fr sq)
 		    fr)))
-
 
 ; needs a flag for data structure handler
 ;; (d) member
@@ -1056,16 +1054,13 @@ Write this in box notation
 
 
 
-
-
-
-
 ;; (a) cons
 ;; (b) list
 ;; (c) length (for lists)
 ;; (d) member (for lists; no keywords)
 ;;
 ;;;; 7. Modify the program in Figure 3.6 to use fewer cons cells.
+
 ;;; (Hint: Use dotted lists.)
 ;;
 ;;
