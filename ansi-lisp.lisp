@@ -1031,11 +1031,6 @@ Write this in box notation
   (lambda (fn)
     (funcall fn itemfor (lazy listfor))))
 
-(defun onullp (item)
-  (if (eq (ocdr item) 'nol)
-      t
-      nil))
-
 
 (defun ocar (ohcons)
   (funcall ohcons (lambda(fr sq)
@@ -1046,13 +1041,36 @@ Write this in box notation
   (funcall ohcons (lambda(fr sq)
 		    fr)))
 
+(defun typenow (typed somethingtotype)
+  (ocons typed somethingtotype))
 
-; needs a flag for data structure handler
+(defun typelistfor (typecheck)
+  (lambda (tocheck)
+    (if (eq (ocdr tocheck) typecheck)
+	t
+	nil)))
+
+(defun getypen (some)
+  (ocar some))
+
+(setq typelistp (typelistfor 'list))
+
+(defun ourcons (somea someb)
+  (typenow 'list (ocons somea someb)))
+
+(defun onullp (item)
+  (if (eq (ocdr item) 'nol)
+      t
+      nil))
+
+
+; needs a flag for data structure handler: a type
 ;; (d) member
 (defun omember (lsts item)
-  (and (not (onullp item))
-       (or (eql (ocdr lsts) item)
-	   (omember (ocar lsts) item))))
+  (and (funcall typelistp item)
+       (and (not (onullp (getypen item))
+	    (or (eql (ocdr lsts) item)
+		(omember (ocar lsts) item)))))
 
 
 
