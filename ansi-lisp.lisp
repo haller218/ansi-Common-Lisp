@@ -1049,27 +1049,46 @@ Write this in box notation
 	t
 	nil)))
 
-(defun getypen (some)
-  (ocar some))
-
 (setq typelistp (typelistfor 'list))
+(setq typelistnolp (typelistfor 'nol))
+
+(defun isfunction (item)
+  (eq (type-of item) 'FUNCTION))
+
+(defun getypen (some)
+  (if (isfunction some)
+      (if (funcall typelistnolp some)
+	  'nol
+  'list)))
 
 (defun ourcons (somea someb)
-  (typenow 'list (ocons somea someb)))
+  (cond ((isfunction someb)
+	 (typenow 'list (ocons somea someb)))
+	(t
+	 (typenow 'nol (ocons somea someb)))))
+      
 
 (defun onullp (item)
-  (if (eq (ocdr item) 'nol)
+  (if (eq item 'nol)
       t
       nil))
 
+(defun nocar (item)
+  (ocar (getypen item)))
+
+(defun nocdr (item)
+  (ocdr (getypen item)))
+    
 
 ; needs a flag for data structure handler: a type
 ;; (d) member
 (defun omember (lsts item)
-  (and (funcall typelistp item)
-       (and (not (onullp (getypen item))
-	    (or (eql (ocdr lsts) item)
-		(omember (ocar lsts) item)))))
+  (and (funcall typelistp lsts)
+       (and (not (onullp (getypen lsts))
+	    (or (eql (nocdr lsts) item)
+		(omember (nocar lsts) item))))))
+
+  
 
 
 
