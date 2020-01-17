@@ -1024,7 +1024,7 @@ Write this in box notation
 
 (defun lazy (arg)
   (lambda(fn)
-	(funcall fn arg)))
+    (funcall fn arg)))
 
 ;; (a) cons
 (defun ocons (itemfor listfor)
@@ -1065,8 +1065,7 @@ Write this in box notation
 (defun ourcons (somea someb)
   (if (isfunction someb)
       (typenow 'list (ocons somea someb))
-      (typenow 'nol (ocons somea
-			   (ocons someb 'nol)))))
+      (typenow 'nol (ocons somea someb))))
 
 
 (defun onullp (item)
@@ -1075,30 +1074,34 @@ Write this in box notation
       nil))
 
 (defun nocar (item)
-  (ocar (getypen item)))
+  (if (eq item 'nol)
+      'nol
+      (ocar (getypen item))))
 
 (defun nocdr (item)
   (ocdr (getypen item)))
-    
+
 ;; (b) list
 
 (defun olist (&rest symbolic)
   (defun olist-aps (acc lst)
-    (if (null lst)
+    (if (null (car lst))
 	acc
-	(olist (ourcons (car lst) acc)
-	       (cdr lst))))
-  (olist-aps 'nol symbolic))
+	(olist-aps (ourcons (car lst)
+			    acc)
+		   (cdr lst))))
+  (olist-aps 'nol (reverse symbolic)))
 
-; needs a flag for data structure handler: a type
+
+
+					; needs a flag for data structure handler: a type
 ;; (d) member
 (defun omember (lsts item)
-  (and (funcall typelistp lsts)
-       (and (not (onullp (getypen lsts))
-	    (or (eql (nocdr lsts) item)
-		(omember (nocar lsts) item))))))
+  (and (not (eq (nocdr lsts) 'nol))
+       (or (eql (nocdr lsts) item)
+	   (omember (nocar lsts) item))))
 
-  
+
 
 
 
