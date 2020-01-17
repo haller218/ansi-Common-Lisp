@@ -1053,18 +1053,20 @@ Write this in box notation
 (setq typelistnolp (typelistfor 'nol))
 
 (defun isfunction (item)
-  (eq (type-of item) 'FUNCTION))
+  (eq (type-of item) 'COMPILED-FUNCTION))
+
 
 (defun getypen (some)
   (if (isfunction some)
-      (if (funcall typelistnolp some)
-	  'nol)))
+      (ocar some)
+      some))
+
 
 (defun ourcons (somea someb)
-  (cond ((isfunction someb)
-	 (typenow 'list (ocons somea someb)))
-	(t
-	 (typenow 'nol (ocons somea someb)))))
+  (if (isfunction someb)
+      (typenow 'list (ocons somea someb))
+      (typenow 'nol (ocons somea
+			   (ocons someb 'nol)))))
 
 
 (defun onullp (item)
@@ -1080,14 +1082,13 @@ Write this in box notation
     
 ;; (b) list
 
-(defun olist (symbolic)
+(defun olist (&rest symbolic)
   (defun olist-aps (acc lst)
     (if (null lst)
 	acc
 	(olist (ourcons (car lst) acc)
 	       (cdr lst))))
   (olist-aps 'nol symbolic))
-
 
 ; needs a flag for data structure handler: a type
 ;; (d) member
