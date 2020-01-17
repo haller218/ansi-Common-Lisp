@@ -1058,15 +1058,14 @@ Write this in box notation
 (defun getypen (some)
   (if (isfunction some)
       (if (funcall typelistnolp some)
-	  'nol
-  'list)))
+	  'nol)))
 
 (defun ourcons (somea someb)
   (cond ((isfunction someb)
 	 (typenow 'list (ocons somea someb)))
 	(t
 	 (typenow 'nol (ocons somea someb)))))
-      
+
 
 (defun onullp (item)
   (if (eq item 'nol)
@@ -1079,6 +1078,16 @@ Write this in box notation
 (defun nocdr (item)
   (ocdr (getypen item)))
     
+;; (b) list
+
+(defun olist (symbolic)
+  (defun olist-aps (acc lst)
+    (if (null lst)
+	acc
+	(olist (ourcons (car lst) acc)
+	       (cdr lst))))
+  (olist-aps 'nol symbolic))
+
 
 ; needs a flag for data structure handler: a type
 ;; (d) member
