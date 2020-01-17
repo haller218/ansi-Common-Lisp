@@ -1094,8 +1094,9 @@ Write this in box notation
 
 
 
-					; needs a flag for data structure handler: a type
-;; (d) member
+;; needs a flag for data structure handler: a type
+;;; (d) member
+;; Lambda, the Ultimate Opticode
 (defun omember (lsts item)
   (and (not (eq (nocdr lsts) 'nol))
        (or (eql (nocdr lsts) item)
