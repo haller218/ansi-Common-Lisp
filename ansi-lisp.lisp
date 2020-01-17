@@ -1031,6 +1031,13 @@ Write this in box notation
   (lambda (fn)
     (funcall fn itemfor (lazy listfor))))
 
+<<<<<<< HEAD
+=======
+(defun onullp (item)
+  (if (eq (ocdr item) 'nol)
+      t
+      nil))
+>>>>>>> 193ba4de560fae936463190d7b33bcc3c9af219a
 
 (defun ocar (ohcons)
   (funcall ohcons (lambda(fr sq)
@@ -1041,6 +1048,7 @@ Write this in box notation
   (funcall ohcons (lambda(fr sq)
 		    fr)))
 
+<<<<<<< HEAD
 (defun typenow (typed somethingtotype)
   (ocons typed somethingtotype))
 
@@ -1065,6 +1073,9 @@ Write this in box notation
 
 
 ; needs a flag for data structure handler: a type
+=======
+; needs a flag for data structure handler
+>>>>>>> 193ba4de560fae936463190d7b33bcc3c9af219a
 ;; (d) member
 (defun omember (lsts item)
   (and (funcall typelistp item)
@@ -1074,16 +1085,13 @@ Write this in box notation
 
 
 
-
-
-
-
 ;; (a) cons
 ;; (b) list
 ;; (c) length (for lists)
 ;; (d) member (for lists; no keywords)
 ;;
 ;;;; 7. Modify the program in Figure 3.6 to use fewer cons cells.
+
 ;;; (Hint: Use dotted lists.)
 ;;
 ;;
