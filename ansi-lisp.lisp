@@ -1056,7 +1056,6 @@ Write this in box notation
   (eq (type-of item) 'FUNCTION)) ; COMPILED-FUNCTION for CL-android
 					; FUNCTION for sbcl
 
-
 (defun getypen (some)
   (if (isfunction some)
       (ocar some)
@@ -1069,13 +1068,10 @@ Write this in box notation
       (typenow 'nol (ocons somea someb))))
 
 
-(defun onullp (item)
-  (if (eq (nocar item) 'nol)
-      t
-      nil))
-
 (defun nolp (item)
-  (eq item 'nol))
+  (if (not (isfunction item))
+      (eq item 'nol)
+      nil))
 
 (defun nocar (item)
   (if (nolp item)
@@ -1087,8 +1083,14 @@ Write this in box notation
       'nol
   (ocdr (getypen item))))
 
-;; (b) list
 
+(defun onullp (item)
+  (if (eq (nocar item) 'nol)
+      t
+      nil))
+
+
+;; (b) list
 (defun olist (&rest symbolic)
   (defun olist-aps (acc lst)
     (if (null (car lst))
@@ -1098,6 +1100,15 @@ Write this in box notation
 		   (cdr lst))))
   (olist-aps 'nol (reverse symbolic)))
 
+
+;; (c) length
+(defun olength (olist)
+  (defun olength-aps (cont tsl)
+    (if (onullp tsl)
+	cont
+	(olength-aps (+ cont 1)
+		     (nocar tsl))))
+  (olength-aps 1 olist))
 
 
 ;; needs a flag for data structure handler: a type
