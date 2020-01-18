@@ -1053,7 +1053,8 @@ Write this in box notation
 (setq typelistnolp (typelistfor 'nol))
 
 (defun isfunction (item)
-  (eq (type-of item) 'COMPILED-FUNCTION))
+  (eq (type-of item) 'FUNCTION)) ; COMPILED-FUNCTION for CL-android
+					; FUNCTION for sbcl
 
 
 (defun getypen (some)
