@@ -1074,13 +1074,18 @@ Write this in box notation
       t
       nil))
 
+(defun nolp (item)
+  (eq item 'nol))
+
 (defun nocar (item)
-  (if (eq item 'nol)
+  (if (nolp item)
       'nol
       (ocar (getypen item))))
 
 (defun nocdr (item)
-  (ocdr (getypen item)))
+  (if (nolp item)
+      'nol
+  (ocdr (getypen item))))
 
 ;; (b) list
 
@@ -1099,16 +1104,15 @@ Write this in box notation
 ;;; (d) member
 ;; Lambda, the Ultimate Opticode
 (defun omember (item tsl)
-  (defun omember-aps (acc lst item)
+  (defun omember-aps (lst item)
     (cond ((onullp lst)
-	   acc)
+	   'nol)
 	  ((eq (nocdr lst) item)
-	   acc)
+	   lst)
 	  (t
 	   (omember-aps (nocar lst)
-			(nocar lst)
 			item))))
-  (omember-aps 'nol tsl item))
+  (omember-aps tsl item))
 
 
 
