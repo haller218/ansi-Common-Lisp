@@ -1070,7 +1070,7 @@ Write this in box notation
 
 
 (defun onullp (item)
-  (if (eq item 'nol)
+  (if (eq (nocar item) 'nol)
       t
       nil))
 
@@ -1098,10 +1098,17 @@ Write this in box notation
 ;; needs a flag for data structure handler: a type
 ;;; (d) member
 ;; Lambda, the Ultimate Opticode
-(defun omember (lsts item)
-  (and (not (eq (nocdr lsts) 'nol))
-       (or (eql (nocdr lsts) item)
-	   (omember (nocar lsts) item))))
+(defun omember (item tsl)
+  (defun omember-aps (acc lst item)
+    (cond ((onullp lst)
+	   acc)
+	  ((eq (nocdr lst) item)
+	   acc)
+	  (t
+	   (omember-aps (nocar lst)
+			(nocar lst)
+			item))))
+  (omember-aps 'nol tsl item))
 
 
 
