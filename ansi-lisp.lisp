@@ -1139,6 +1139,33 @@ Write this in box notation
 ;;; (Hint: Use dotted lists.)
 ;;
 ;;
+
+
+(defun compress (x)
+  (if (consp x)
+      (compr (car x) 1 (cdr x) nil)
+    x))
+
+(defun compr (elt n lst acc)
+  (if (null lst)
+      (reverse (cons (n-elts elt n) acc))
+      (let ((next (car lst)))
+	(if (eql next elt)
+	    (compr elt (+ n 1) (cdr lst) acc)
+	    (compr next 1 (cdr lst)
+		   (cons (n-elts elt n) acc))))))
+
+
+
+(defun n-elts (elt n)
+  (if (> n 1)
+      (list n elt)
+    elt))
+
+
+
+;;
+;;
 ;;;; 8. Define a function that takes a list and prints it in dot notation:
 ;;; > (showdots '(a b c))
 ;;; (A . (B . (C . NIL)))
