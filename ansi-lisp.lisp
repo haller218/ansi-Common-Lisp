@@ -1126,9 +1126,6 @@ Write this in box notation
   (omember-aps tsl item))
 
 
-
-
-
 ;; (a) cons
 ;; (b) list
 ;; (c) length (for lists)
@@ -1169,6 +1166,35 @@ Write this in box notation
 ;;;; 8. Define a function that takes a list and prints it in dot notation:
 ;;; > (showdots '(a b c))
 ;;; (A . (B . (C . NIL)))
+;;
+;;
+
+(defun printdotto (percor)
+  (defun printit (stringof)
+    (write stringof))
+  (defun stringfly (lst)
+    (let ((strf "")
+	  (closed 0))
+      (defun closeallof (stgj num)
+	(if (= num 0)
+	    stgj
+	    (closeallof
+	     (concatenate 'string stgj ")")
+	     (- num 1))))
+      (defun percur (lstg)
+	(cond ((null lstg)
+	       (setf closed (+ closed 1))
+	       (printit (closeallof
+			 (concatenate 'string
+				      strf " . NIL")
+			 closed)))))
+
+
+
+
+
+
+
 ;;
 ;;
 ;;;; 9. Write a program to find the longest finite path through a network
