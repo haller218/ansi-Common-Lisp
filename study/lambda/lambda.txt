@@ -1,0 +1,293 @@
+[(uv)/x](\y.x(\w.vwx))
+
+\y.uv(\w.vwuv)
+
+[(\y.xy)/x](\y.x(\x.x))
+
+\y.((\y.xy)((\y.xy)(\y.xy)))
+
+[(\y.vy)/x](y(\v.xv))
+
+(\y.((\y.vy)v))
+
+[(uv)/x](\x.zy)
+
+(\uv.zy)
+
+b-reduction, contraction of 
+S-expresions
+
+(\x.x x)(\x.x x)
+
+[(\x.x x) / x](x x) == (\x.x x)(\x.x x)
+
+ex.1.28 * reduces the following 
+terms to b-normal forms;
+
+(a) (\x.x y)(\u.vuu)
+
+[(\u.vuu)/x](x y)
+
+(\u.vuu) y
+
+[y/u](vuu)
+
+vyy    ;; b-normal form
+
+(b) (\xy.y x)uv
+
+[u/x][v/y](y x)
+
+; or
+
+(\x.\y.yx)uv
+
+[u/x](\y.yx)v
+
+(\y.yu)v
+
+[v/y](yu)
+
+v u     ;; b-normal form
+
+(c) (\x.x( x( y z )) x)(\u.u v)
+
+[(\u.uv)/x](x (x (y z)) x)
+
+ß-normal
+
+((\u.uv)((\u.uv)(yz))(\u.uv))
+
+;; add parenteses, left association.
+
+((((\u.uv)((\u.uv))(yz)))(\u.uv))
+
+((([(\u.uv)/u](uv))(yz))(\u.uv))
+
+((((\u.uv) v)(yz))(\u.uv))
+
+((([v/u](uv))(yz))(\u.uv))
+
+(((v v)(y z))(\u.uv)) ;; ß-normal form?
+
+
+;;; error, not left association
+#||
+[(\u.u v)/x](x( x( y z)) x)
+
+(\u.uv)( (\u.uv)(y z)) (\u.uv)
+
+(\u.uv)[(\u.uv)/u](uv(y z))
+
+(\u.uv)(((\u.uv) v)(y z))
+||#
+
+
+;; probabli error
+#||
+[(\u.uv)/u](uv (\u.uv)(y z))
+
+((\u.uv) v)(\u.uv)(y z)
+
+[v/u](uv (\u.uv)(y z))
+
+(v v)(\u.uv)(y z)
+||#
+;; problabli error
+
+(d) (\x.xxy)(\y.yz)
+
+[(\y.yz)/x](xxy)
+
+((\y.yz)(\y.yz)y)
+
+;; normal form
+;; add parenteses
+;; left association
+
+(((\y.yz)(\y.yz))y)
+
+;; alpha conversion
+
+(((\y'.y'z')(\y''.y''z''))y)
+
+[(\y'.y'z')/y'']((y''z'')y)
+
+(((\y'.y'z')z'')y)
+
+((([z''/y'](y'z'))y)
+
+((z''z')y) ;; b-normal form
+
+(e) (\xy.xyy)(\u.uyx)
+
+(\x.\y.xyy)(\u.uyx)
+
+;; alpha conversion
+
+(\x'.\y'.x'y'y')(\u.uy''x'')
+
+[(\u.uy''x'')/x'](x'y'y')
+
+((\u.uy''x'')y'y')
+
+;; ß-normal
+
+(((\u.uy''x'')y')y')
+
+(([y'/u](uy''x'')y')
+
+((y'y''x'')y') ;; ß-normal form
+
+
+(f) (\xyz.xz( yz))((\xy.yx) u)((\xy.yx) v) w
+
+;; part1
+
+(\xyz.xz(yz))((\xy.yx)u)
+
+;; ß normal
+
+(((\xyz.xz(yz))(\xy.yx))u)
+
+;; alpha conversion
+
+((\x'y'z'.x'z'(y'z'))(\x''y''.y''x''))u)
+
+(((\x'.\y'z'.x'z'(y'z'))(\x''y''.y''x''))u)
+
+([(\x''y''.y''x'')/x'](\y'z'.x'z'(y'z'))u)
+
+(((\y'z'.(\x''y''.y''x'')z'(y'z'))u)
+
+;; ß-normal
+
+((\y'z'.((((\x''y''.y''x'')z')(y'z'))u))
+
+((\y'z'.(((\x''.\y''.y''x'')z')(y'z')))u)
+
+((\y'z'.([z'/x''](\y''.y''x''))(y'z'))u)
+
+((\y'z'.(\y''.y''z')(y'z'))u)
+
+((\y'z'.([(y'z')/y''](y''z')))u)
+
+((\y'z'.((y'z')z'))u)
+
+((\y'.\z'.((y'z')z'))u)
+
+([u/y'](\z'.((y'z')z')))
+
+(\z'.(uz')z')  ;; ß-normal form of part1
+
+;; substitution part1 in source
+
+(\xyz.xz( yz))((\xy.yx) u)((\xy.yx) v) w
+
+([(\z'.(uz')z')/part1]((\xyz.xz( yz))((\xy.yx) u))((\xy.yx) v) w))
+
+(\z'.(uz')z')((\xy.yx) v) w
+
+;; ß-normal
+
+(((\z'.(uz')z')((\xy.yx)v))w)
+
+(((\z'.(uz')z')((\x.\y.yx)v))w)
+
+(((\z'.(uz')z')(([v/x](\y.yx))w)
+
+(((\z'.(uz')z')(\y.yv))w)
+
+(([(\y.yv)/z']((uz')z'))w)
+
+(((u(\y.yv))(y.yv))w) 
+;; ß-normal form?
+
+
+
+Apendice A1
+
+ex. A1.3 * By the way, the term P in
+the above example is not a 
+\ I-term P could serve instead. 
+Let u, v, x, y (in that order) be the 
+first four variables of the language 
+of \-calculos, and define 
+
+P = (\x.S) v
+
+where 
+
+S = (\yx.uvy) x
+
+(Show, using Chapter 1's 1.12, 
+that P ß-reduces without a-steps 
+to both \y.uyv and \x.uxv)
+
+P = (\x.S) v
+S = (\yx.uvy) x
+
+([((\yx.uvy)x)/S]((\x.S)v))
+
+((\x.((\yx.uvy)x))v)
+
+ß-normal
+
+((\x.((\y.\x.uvy)x))v)
+
+a-conversion-0
+
+((\x'.((\y''.\x''.u''v''y'')x'''))v)
+
+((\x'.([x'''/y''](\x''.u''v''y'')))v)
+
+((\x'.(\x''.u''v''x'''))v)
+
+([v/x'](\x''.u''v''x'''))
+
+(\x''.u''v''x''') ;; ß-normal form
+
+;; (\y.uyv) and (\x.uxv)
+
+;; this is posible because 
+;; the unbound variable x in S
+;; can have the same name 
+;; the bound variable x in P.
+
+
+
+
+
+
+
+
+
+
+ex. 1.35 * Do not confuse 
+being a ß-nf with having a 
+ß-nf: first prove that
+(a) [N/x]M is a ß-nf =ß M is a ß-nf ;
+then, in contrast (harder), find 
+terms M and N such that 
+[N/x]M has a ß-nf but M does not; 
+this will prove that 
+(b) [N/x]M has a ß-nf =ß M 
+has a ß-nf.
+
+
+ex. 1.36 * (Harder) Find 
+terms P, Q such that neither of 
+P, Q has a ß-nf, but P Q has a ß-nf.
+1D ß-equality
+Reduction is non-symmetric, 
+but it generates the following 
+symmetric relation.
+
+
+
+
+
+
+
+
+

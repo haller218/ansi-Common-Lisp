@@ -1,0 +1,184 @@
+[(uv)/x](\y.x(\w.vwx))
+
+\y.uv(\w.vwuv)
+
+[(\y.xy)/x](\y.x(\x.x))
+
+\y.((\y.xy)((\y.xy)(\y.xy)))
+
+[(\y.vy)/x](y(\v.xv))
+
+(\y.((\y.vy)v))
+
+[(uv)/x](\x.zy)
+
+(\uv.zy)
+
+b-reduction, contraction of 
+S-expresions
+
+(\x.x x)(\x.x x)
+
+[(\x.x x) / x](x x) == (\x.x x)(\x.x x)
+
+ex.1.28 * reduces the following 
+terms to b-normal forms;
+
+(a) (\x.x y)(\u.vuu)
+
+[(\u.vuu)/x](x y)
+
+(\u.vuu) y
+
+[y/u](vuu)
+
+vyy    ;; b-normal form
+
+(b) (\xy.y x)uv
+
+[u/x][v/y](y x)
+
+; or
+
+(\x.\y.yx)uv
+
+[u/x](\y.yx)v
+
+(\y.yu)v
+
+[v/y](yu)
+
+v u     ;; b-normal form
+
+(c) (\x.x( x( y z )) x)(\u.u v)
+
+[(\u.uv)/x](x (x (y z)) x)
+
+((\u.uv)((\u.uv)(yz))(\u.uv))
+
+;; add parenteses, left association.
+
+((((\u.uv)((\u.uv))(yz)))(\u.uv))
+
+((([(\u.uv)/u](uv))(yz))(\u.uv))
+
+((((\u.uv) v)(yz))(\u.uv))
+
+((([v/u](uv))(yz))(\u.uv))
+
+(((v v)(y z))(\u.uv)) ;; b-normal form?
+
+
+;;; error, not left association
+#||
+[(\u.u v)/x](x( x( y z)) x)
+
+(\u.uv)( (\u.uv)(y z)) (\u.uv)
+
+(\u.uv)[(\u.uv)/u](uv(y z))
+
+(\u.uv)(((\u.uv) v)(y z))
+||#
+
+
+;; probabli error
+#||
+[(\u.uv)/u](uv (\u.uv)(y z))
+
+((\u.uv) v)(\u.uv)(y z)
+
+[v/u](uv (\u.uv)(y z))
+
+(v v)(\u.uv)(y z)
+||#
+;; problabli error
+
+(d) (\x.xxy)(\y.yz)
+
+[(\y.yz)/x](xxy)
+
+((\y.yz)(\y.yz)y)
+
+;; normal form
+;; add parenteses
+;; left association
+
+(((\y.yz)(\y.yz))y)
+
+;; alpha conversion
+
+(((\y'.y'z')(\y''.y''z''))y)
+
+[(\y'.y'z')/y'']((y''z'')y)
+
+(((\y'.y'z')z'')y)
+
+((([z''/y'](y'z'))y)
+
+((z''z')y) ;; b-normal form
+
+(e) (\xy.xyy)(\u.uyx)
+
+(\x.\y.xyy)(\u.uyx)
+
+;; alpha conversion
+
+(\x'.\y'.x'y'y')(\u.uy''x'')
+
+[(\u.uy''x'')/x'](x'y'y')
+
+((\u.uy''x'')y'y')
+
+;; ß-normal
+
+(((\u.uy''x'')y')y')
+
+(([y'/u](uy''x'')y')
+
+((y'y''x'')y') ;; ß-normal form
+
+
+(f) (\xyz.xz( yz))((\xy.yx) u)((\xy.yx) v) w.
+
+;; part1
+
+(\xyz.xz(yz))((\xy.yx)u)
+
+;; ß normal
+
+((\xyz.xz(yz))(\xy.yx))u)
+
+;; alpha transformation
+
+((\x'y'z'.x'z'(y'z'))(\x''y''.y''x''))u)
+
+((\x'.\y'z'.x'z'(y'z'))(\x''y''.y''x''))u)
+
+(([(\x''y''.y''x'')/x](\y'z',x'z'(y'z'))(\x''y''.y''x''))u))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
